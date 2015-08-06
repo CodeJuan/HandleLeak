@@ -18,6 +18,8 @@
 	WaitForSingleObject(ShExecInfo.hProcess,INFINITE); 
 ```
 答案是有问题的，问题在于设置了`SEE_MASK_NOCLOSEPROCESS`
+
+看一下`SHELLEXECUTEINFOW`的定义
 ```cpp
 typedef struct _SHELLEXECUTEINFOW
 {
@@ -50,3 +52,18 @@ typedef struct _SHELLEXECUTEINFOW
 也就是说，如果指定了`SEE_MASK_NOCLOSEPROCESS`，`hProcess`就是返回的句柄。如果不关闭，就会造成句柄泄漏。
 
 测试截图
+
+运行一段时间后400+句柄
+![](https://github.com/CodeJuan/HandleLeak/raw/master/pic/Leak1.JPG)
+再过一段时间1000+句柄
+![](https://github.com/CodeJuan/HandleLeak/raw/master/pic/Leak2.JPG)
+接下来2000+句柄
+![](https://github.com/CodeJuan/HandleLeak/raw/master/pic/Leak3.JPG)
+
+
+加上`CloseHandle`之后 
+```cpp
+CloseHandle(ShExecInfo.hProcess);
+```
+句柄始终保持在100左右
+![](https://github.com/CodeJuan/HandleLeak/raw/master/pic/CloseHandle.JPG)
