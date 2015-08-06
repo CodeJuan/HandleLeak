@@ -18,6 +18,22 @@ using namespace std;
 void TestHandleLeak()
 {
 	cout << __FUNCTION__ << endl;
+
+	SHELLEXECUTEINFO ShExecInfo = {0};
+	ShExecInfo.cbSize = sizeof(SHELLEXECUTEINFO);
+	ShExecInfo.fMask = SEE_MASK_NOCLOSEPROCESS;
+	ShExecInfo.hwnd = NULL;
+	ShExecInfo.lpVerb = _T("open");
+	ShExecInfo.lpFile = _T("cmd");
+	ShExecInfo.lpParameters = _T("/c echo 111");
+	ShExecInfo.lpDirectory = NULL;
+	ShExecInfo.nShow = SW_HIDE;
+	ShExecInfo.hInstApp = NULL;
+
+	ShellExecuteEx(&ShExecInfo);
+
+	WaitForSingleObject(ShExecInfo.hProcess,INFINITE); 
+
 	return;
 }
 
@@ -39,7 +55,12 @@ int _tmain(int argc, TCHAR* argv[], TCHAR* envp[])
 		else
 		{
 			// TODO: code your application's behavior here.
-			TestHandleLeak();
+			int i = 0;
+			while (i < 10000)
+			{
+				TestHandleLeak();
+				Sleep(10);
+			}
 		}
 	}
 	else
