@@ -54,16 +54,24 @@ typedef struct _SHELLEXECUTEINFOW
 测试截图
 
 运行一段时间后400+句柄
+
 ![](https://github.com/CodeJuan/HandleLeak/raw/master/pic/Leak1.JPG)
+
 再过一段时间1000+句柄
+
 ![](https://github.com/CodeJuan/HandleLeak/raw/master/pic/Leak2.JPG)
+
 接下来2000+句柄
+
 ![](https://github.com/CodeJuan/HandleLeak/raw/master/pic/Leak3.JPG)
+
 
 
 加上`CloseHandle`之后 
 ```cpp
 CloseHandle(ShExecInfo.hProcess);
 ```
+
 句柄始终保持在100左右
+
 ![](https://github.com/CodeJuan/HandleLeak/raw/master/pic/CloseHandle.JPG)
