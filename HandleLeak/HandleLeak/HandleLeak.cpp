@@ -34,6 +34,8 @@ void TestHandleLeak()
 
 	WaitForSingleObject(ShExecInfo.hProcess,INFINITE); 
 
+	CloseHandle(ShExecInfo.hProcess);
+
 	return;
 }
 
@@ -59,7 +61,6 @@ int _tmain(int argc, TCHAR* argv[], TCHAR* envp[])
 			while (i < 10000)
 			{
 				TestHandleLeak();
-				Sleep(10);
 			}
 		}
 	}
