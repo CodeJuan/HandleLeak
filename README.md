@@ -51,7 +51,7 @@ typedef struct _SHELLEXECUTEINFOW
 
 也就是说，如果指定了`SEE_MASK_NOCLOSEPROCESS`，`hProcess`就是返回的句柄。如果不关闭，就会造成句柄泄漏。
 
-测试截图
+## 测试截图
 
 运行一段时间后400+句柄
 
@@ -75,3 +75,5 @@ CloseHandle(ShExecInfo.hProcess);
 句柄始终保持在100左右
 
 ![](https://github.com/CodeJuan/HandleLeak/raw/master/pic/CloseHandle.JPG)
+
+
